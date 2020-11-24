@@ -98,7 +98,7 @@ class App extends Component{
   constructor(props){
     super(props);
     this.state = {
-      customers : '',
+      reservations : '',
       completed : 0,
       searchKeyword : ''
     }
@@ -106,24 +106,24 @@ class App extends Component{
 
   stateRefresh = () => {
     this.setState({
-      customers : '',
+      reservations : '',
       completed : 0,
       searchKeyword : ''
     });
     this.callApi()
-      .then(res => this.setState({customers : res}))
+      .then(res => this.setState({reservations : res}))
       .catch(err => console.log(err));
   }
 
   componentDidMount(){
     this.timer = setInterval(this.progress, 20);
     this.callApi()
-      .then(res => this.setState({customers : res}))
+      .then(res => this.setState({reservations : res}))
       .catch(err => console.log(err));
   }
 
   callApi = async () => {
-    const response = await fetch('/api/customers');
+    const response = await fetch('/api/reservations');
     const body = await response.json();
     return body;
   }
@@ -142,14 +142,16 @@ class App extends Component{
   render(){
     const filteredComponents = (data) => {
       data = data.filter((c) => {
-        return c.name.indexOf(this.state.searchKeyword) > -1;
+        return c.guest_id.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <Customer stateRefresh={this.stateRefresh} key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} />
+        return <Customer stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_id={c.guest_id} 
+        room_number={c.room_number} number_of_members={c.number_of_members} nights={c.nights} check_in={c.check_in} check_out={c.check_out}
+        payment_status={c.payment_status} pick_up={c.pick_up} cancel_status={c.cancel_status}/>
       });
     }
     const { classes } = this.props;
-    const cellList = ["번호", "프로필 이미지", "이름", "생년월일", "성별", "직업", "설정"];
+    const cellList = ["예약번호", "고객성명", "객실번호", "숙박인원", "숙박일수", "체크인", "체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -163,7 +165,7 @@ class App extends Component{
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            고객 관리 시스템
+            예약 현황 및 관리
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -196,10 +198,10 @@ class App extends Component{
               </TableRow>
             </TableHead>
             <TableBody>
-              { this.state.customers ? 
-              filteredComponents(this.state.customers) :  
+              { this.state.reservations ? 
+              filteredComponents(this.state.reservations) :  
               <TableRow>
-                <TableCell colSpan="6" align="center">
+                <TableCell colSpan="10" align="center">
                   <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
                 </TableCell>
               </TableRow>

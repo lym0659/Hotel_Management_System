@@ -61,7 +61,7 @@ class CustomerAdd extends React.Component{
     }
 
     addCustomer = () => {
-        const url = '/api/customers';
+        const url = '/api/reservations';
         const formData = new FormData();
         formData.append('image', this.state.file)
         formData.append('name', this.state.userName);
