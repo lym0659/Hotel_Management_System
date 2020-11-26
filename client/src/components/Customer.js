@@ -10,11 +10,13 @@ class Customer extends React.Component{
             <TableRow>
                 <TableCell>{this.props.reserve_number}</TableCell>
                 <TableCell>{this.props.guest_id}</TableCell>
+                <TableCell>{this.props.guest_name}</TableCell>
                 <TableCell>{this.props.room_number}</TableCell>
                 <TableCell>{this.props.number_of_members}</TableCell>
-                <TableCell>{this.props.nights}</TableCell>
                 <TableCell>{this.props.check_in}</TableCell>
                 <TableCell>{this.props.check_out}</TableCell>
+                <TableCell>{this.props.real_check_in}</TableCell>
+                <TableCell>{this.props.real_check_out}</TableCell>
                 <TableCell>{this.props.payment_status}</TableCell>
                 <TableCell>{this.props.pick_up}</TableCell>
                 <TableCell>{this.props.cancel_status}</TableCell>

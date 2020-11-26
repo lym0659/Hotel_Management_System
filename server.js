@@ -25,7 +25,7 @@ const upload = multer({dest : './upload'});
 
 app.get('/api/reservations', (req, res) => {
     connection.query(
-      "SELECT * FROM Reservation",
+      "SELECT reserve_number, guest_id, guest_name, room_number, number_of_members, check_in, check_out, real_check_in, real_check_out, payment_status, pick_up, cancel_status FROM Reservation NATURAL JOIN Guest",
       (err, rows, fields) => {
         res.send(rows);
       }
@@ -34,28 +34,33 @@ app.get('/api/reservations', (req, res) => {
 
 //app.use('/image', express.static('./upload'));
 
-/*app.post('/api/reservations', upload.single('image'), (req, res) => {
-    let sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, ?, now(), 0)';
-    let image = '/image/' + req.file.filename;
-    let name = req.body.name;
-    let birthday = req.body.birthday;
-    let gender = req.body.gender;
-    let job = req.body.job;
-    let params = [image, name, birthday, gender, job];
+app.post('/api/reservations', (req, res) => {
+    let sql = 'INSERT INTO Reservation VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    let reserve_number = req.file.reserve_number;
+    let guest_id = req.body.guest_id;
+    let room_number = req.body.room_number;
+    let number_of_members = req.body.number_of_members;
+    let nights = req.body.nights;
+    let check_in = req.body.check_in;
+    let check_out = req.body.check_out;
+    let payment_status = req.body.payment_status;
+    let pick_up = req.body.pick_up;
+    let cancel_status = req.body.cancel_status;
+    let params = [reserve_number, guest_id, room_number, number_of_members, nights, check_in, check_out, payment_status, pick_up, cancel_status];
     connection.query(sql, params,
       (err, rows, fields) => {
         res.send(rows);
       });
-});*/
+});
 
-/*
+
 app.delete('/api/reservations/:id', (req, res) => {
-  let sql = 'UPDATE CUSTOMER SET isDeleted = 1 WHERE id = ?';
-  let params = [req.params.id];
+  let sql = 'UPDATE Reservation SET isDeleted = 1 WHERE reserve_number = ?';
+  let params = [req.params.reserve_number];
   connection.query(sql, params,
     (err,rows,fields) => {
       res.send(rows);
     })
-})*/
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

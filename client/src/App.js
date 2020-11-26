@@ -15,13 +15,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
 const styles = theme => ({
   root : {
-    width : '100%',
+    width : '110%',
     flexGrow: 1,
     minWidth : 1080
   },
@@ -142,16 +142,16 @@ class App extends Component{
   render(){
     const filteredComponents = (data) => {
       data = data.filter((c) => {
-        return c.guest_id.indexOf(this.state.searchKeyword) > -1;
+        return c.guest_name.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <Customer stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_id={c.guest_id} 
-        room_number={c.room_number} number_of_members={c.number_of_members} nights={c.nights} check_in={c.check_in} check_out={c.check_out}
-        payment_status={c.payment_status} pick_up={c.pick_up} cancel_status={c.cancel_status}/>
+        return <Customer stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_id={c.guest_id} guest_name={c.guest_name}
+        room_number={c.room_number} number_of_members={c.number_of_members} check_in={c.check_in} check_out={c.check_out} real_check_in={c.real_check_in}
+        real_check_out={c.real_check_out} payment_status={c.payment_status} pick_up={c.pick_up} cancel_status={c.cancel_status}/>
       });
     }
     const { classes } = this.props;
-    const cellList = ["예약번호", "고객성명", "객실번호", "숙박인원", "숙박일수", "체크인", "체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
+    const cellList = ["예약번호", "고객번호", "고객성명", "객실번호", "숙박인원", "예정 체크인", "예정 체크아웃", "실제 체크인", "실제 체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
     return (
       <div className={classes.root}>
         <AppBar position="static">

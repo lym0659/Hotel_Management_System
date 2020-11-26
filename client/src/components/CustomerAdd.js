@@ -19,12 +19,16 @@ class CustomerAdd extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            file : null,
-            userName : '',
-            birthday :  '',
-            gender : '',
-            job : '',
-            fileName : '',
+            reserve_number : '',
+            guest_id : '',
+            room_number :  '',
+            number_of_members : '',
+            nights : '',
+            check_in : '',
+            check_out : '',
+            payment_status : '',
+            pick_up : '',
+            cancel_status : '',
             open : false
         }
     }
@@ -37,12 +41,16 @@ class CustomerAdd extends React.Component{
                 this.props.stateRefresh();
             })
         this.setState({
-            file : null,
-            userName : '',
-            birthday : '',
-            gender : '',
-            job : '',
-            fileName : '',
+            reserve_number : '',
+            guest_id : '',
+            room_number :  '',
+            number_of_members : '',
+            nights : '',
+            check_in : '',
+            check_out : '',
+            payment_status : '',
+            pick_up : '',
+            cancel_status : '',
             open : false
         })
     }
@@ -63,11 +71,16 @@ class CustomerAdd extends React.Component{
     addCustomer = () => {
         const url = '/api/reservations';
         const formData = new FormData();
-        formData.append('image', this.state.file)
-        formData.append('name', this.state.userName);
-        formData.append('birthday', this.state.birthday);
-        formData.append('gender', this.state.gender);
-        formData.append('job', this.state.job);
+        formData.append('reserve_number', this.state.reserve_number)
+        formData.append('guest_id', this.state.guest_id);
+        formData.append('room_number', this.state.room_number);
+        formData.append('number_of_members', this.state.number_of_members);
+        formData.append('nights', this.state.nights);
+        formData.append('check_in', this.state.check_in);
+        formData.append('check_out', this.state.check_out);
+        formData.append('payment_status', this.state.payment_status);
+        formData.append('pick_up', this.state.pick_up);
+        formData.append('cancel_status', this.state.cancel_status);
         const config = {
             headers : {
                 'content-type' : 'multipart/form-data'
@@ -85,12 +98,16 @@ class CustomerAdd extends React.Component{
 
     handleClose = () => {
         this.setState({
-            file : null,
-            userName : '',
-            birthday : '',
-            gender : '',
-            job : '',
-            fileName : '',
+            reserve_number : '',
+            guest_id : '',
+            room_number :  '',
+            number_of_members : '',
+            nights : '',
+            check_in : '',
+            check_out : '',
+            payment_status : '',
+            pick_up : '',
+            cancel_status : '',
             open : false
         })
     }
@@ -100,22 +117,21 @@ class CustomerAdd extends React.Component{
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-                    고객 추가하기
+                    예약 추가하기
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose}>
-                    <DialogTitle>고객 추가</DialogTitle>
+                    <DialogTitle>예약 추가</DialogTitle>
                     <DialogContent>
-                        <input className={classes.hidden} accept="image/*" id="raised-button-file" type = "file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange}/><br/>
-                        <label htmlFor="raised-button-file">
-                            <Button variant="contained" color="primary" component="span" name="file">
-                                {this.state.fileName === "" ? "프로필 이미지 선택" : this.state.fileName}
-                            </Button>
-                        </label>
-                        <br/>
-                        <TextField label="이름" input type="text" name="userName" value={this.state.userName} onChange={this.handleValueChange}/><br/>
-                        <TextField label="생년월일" input type="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange}/><br/>
-                        <TextField label="성별" input type="text" name="gender" value={this.state.gender} onChange={this.handleValueChange}/><br/>
-                        <TextField label="직업" input type="text" name="job" value={this.state.job} onChange={this.handleValueChange}/><br/>
+                        <TextField label="예약번호" input type="text" name="reserve_number" value={this.state.reserve_number} onChange={this.handleValueChange}/><br/>
+                        <TextField label="고객번호" input type="text" name="guest_id" value={this.state.guest_id} onChange={this.handleValueChange}/><br/>
+                        <TextField label="객실번호" input type="text" name="room_number" value={this.state.room_number} onChange={this.handleValueChange}/><br/>
+                        <TextField label="숙박인원" input type="text" name="number_of_members" value={this.state.number_of_members} onChange={this.handleValueChange}/><br/>
+                        <TextField label="숙박일수" input type="text" name="nights" value={this.state.nights} onChange={this.handleValueChange}/><br/>
+                        <TextField label="체크인" input type="text" name="check_in" value={this.state.check_in} onChange={this.handleValueChange}/><br/>
+                        <TextField label="체크아웃" input type="text" name="check_out" value={this.state.check_out} onChange={this.handleValueChange}/><br/>
+                        <TextField label="결제여부" input type="text" name="payment_status" value={this.state.payment_status} onChange={this.handleValueChange}/><br/>
+                        <TextField label="픽업여부" input type="text" name="pick_up" value={this.state.pick_up} onChange={this.handleValueChange}/><br/>
+                        <TextField label="취소여부" input type="text" name="cancel_status" value={this.state.cancel_status} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>추가</Button>
