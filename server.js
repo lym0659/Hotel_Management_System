@@ -25,18 +25,16 @@ const upload = multer({dest : './upload'});
 
 app.get('/api/reservations', (req, res) => {
     connection.query(
-      "SELECT reserve_number, guest_id, guest_name, room_number, number_of_members, check_in, check_out, real_check_in, real_check_out, payment_status, pick_up, cancel_status FROM Reservation NATURAL JOIN Guest",
+      "SELECT reserve_number, guest_id, guest_name, room_number, number_of_members, check_in, check_out, real_check_in, real_check_out, payment_status, pick_up, cancel_status FROM Reservation NATURAL JOIN Guest WHERE isDeleted = 0",
       (err, rows, fields) => {
         res.send(rows);
       }
     )
 });
 
-//app.use('/image', express.static('./upload'));
-
-app.post('/api/reservations', (req, res) => {
-    let sql = 'INSERT INTO Reservation VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, 0)';
-    let reserve_number = req.file.reserve_number;
+app.post('/api/reservations', upload.single(), (req, res) => {
+    let sql = 'INSERT INTO Reservation VALUES(?, ?, ?, ?, ?, ?, "0000-00-00", "0000-00-00", ?, ?, ?, 0)';
+    let reserve_number = req.body.reserve_number;
     let guest_id = req.body.guest_id;
     let room_number = req.body.room_number;
     let number_of_members = req.body.number_of_members;
@@ -53,7 +51,7 @@ app.post('/api/reservations', (req, res) => {
 });
 
 
-app.delete('/api/reservations/:id', (req, res) => {
+app.delete('/api/reservations/:reserve_number', (req, res) => {
   let sql = 'UPDATE Reservation SET isDeleted = 1 WHERE reserve_number = ?';
   let params = [req.params.reserve_number];
   connection.query(sql, params,

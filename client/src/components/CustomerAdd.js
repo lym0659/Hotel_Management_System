@@ -53,12 +53,12 @@ class CustomerAdd extends React.Component{
         })
     }
 
-    /*handleFileChange = (e) => {
+    handleFileChange = (e) => {
         this.setState({
             file : e.target.files[0],
             fileName : e.target.value
         })
-    }*/
+    }
 
     handleValueChange = (e) => {
         let nextState = {};
@@ -69,7 +69,7 @@ class CustomerAdd extends React.Component{
     addCustomer = () => {
         const url = '/api/reservations';
         const formData = new FormData();
-        formData.append('reserve_number', this.state.reserve_number)
+        formData.append('reserve_number', this.state.reserve_number);
         formData.append('guest_id', this.state.guest_id);
         formData.append('room_number', this.state.room_number);
         formData.append('number_of_members', this.state.number_of_members);
@@ -80,7 +80,7 @@ class CustomerAdd extends React.Component{
         formData.append('cancel_status', this.state.cancel_status);
         const config = {
             headers : {
-                'content-type' : 'text/plain'
+                'content-type' : 'multipart/form-data'
             }
         }
         return post(url, formData, config);
