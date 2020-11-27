@@ -21,7 +21,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const styles = theme => ({
   root : {
-    width : '110%',
+    width : '100%',
     flexGrow: 1,
     minWidth : 1080
   },
@@ -39,7 +39,7 @@ const styles = theme => ({
     margin : theme.spacing(2)
   },
   tableHead : {
-    fontSize : '1.0rem'
+    fontSize : '0.76rem'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -172,7 +172,7 @@ class App extends Component{
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="검색하기"
+              placeholder="예약검색"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -201,7 +201,7 @@ class App extends Component{
               { this.state.reservations ? 
               filteredComponents(this.state.reservations) :  
               <TableRow>
-                <TableCell colSpan="10" align="center">
+                <TableCell colSpan="12" align="center">
                   <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
                 </TableCell>
               </TableRow>

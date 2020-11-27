@@ -23,7 +23,6 @@ class CustomerAdd extends React.Component{
             guest_id : '',
             room_number :  '',
             number_of_members : '',
-            nights : '',
             check_in : '',
             check_out : '',
             payment_status : '',
@@ -45,7 +44,6 @@ class CustomerAdd extends React.Component{
             guest_id : '',
             room_number :  '',
             number_of_members : '',
-            nights : '',
             check_in : '',
             check_out : '',
             payment_status : '',
@@ -55,12 +53,12 @@ class CustomerAdd extends React.Component{
         })
     }
 
-    handleFileChange = (e) => {
+    /*handleFileChange = (e) => {
         this.setState({
             file : e.target.files[0],
             fileName : e.target.value
         })
-    }
+    }*/
 
     handleValueChange = (e) => {
         let nextState = {};
@@ -75,7 +73,6 @@ class CustomerAdd extends React.Component{
         formData.append('guest_id', this.state.guest_id);
         formData.append('room_number', this.state.room_number);
         formData.append('number_of_members', this.state.number_of_members);
-        formData.append('nights', this.state.nights);
         formData.append('check_in', this.state.check_in);
         formData.append('check_out', this.state.check_out);
         formData.append('payment_status', this.state.payment_status);
@@ -83,7 +80,7 @@ class CustomerAdd extends React.Component{
         formData.append('cancel_status', this.state.cancel_status);
         const config = {
             headers : {
-                'content-type' : 'multipart/form-data'
+                'content-type' : 'text/plain'
             }
         }
         return post(url, formData, config);
@@ -102,7 +99,6 @@ class CustomerAdd extends React.Component{
             guest_id : '',
             room_number :  '',
             number_of_members : '',
-            nights : '',
             check_in : '',
             check_out : '',
             payment_status : '',
@@ -113,7 +109,6 @@ class CustomerAdd extends React.Component{
     }
 
     render(){
-        const { classes } = this.props;
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
@@ -126,9 +121,8 @@ class CustomerAdd extends React.Component{
                         <TextField label="고객번호" input type="text" name="guest_id" value={this.state.guest_id} onChange={this.handleValueChange}/><br/>
                         <TextField label="객실번호" input type="text" name="room_number" value={this.state.room_number} onChange={this.handleValueChange}/><br/>
                         <TextField label="숙박인원" input type="text" name="number_of_members" value={this.state.number_of_members} onChange={this.handleValueChange}/><br/>
-                        <TextField label="숙박일수" input type="text" name="nights" value={this.state.nights} onChange={this.handleValueChange}/><br/>
-                        <TextField label="체크인" input type="text" name="check_in" value={this.state.check_in} onChange={this.handleValueChange}/><br/>
-                        <TextField label="체크아웃" input type="text" name="check_out" value={this.state.check_out} onChange={this.handleValueChange}/><br/>
+                        <TextField label="예상 체크인" input type="text" name="check_in" value={this.state.check_in} onChange={this.handleValueChange}/><br/>
+                        <TextField label="예상 체크아웃" input type="text" name="check_out" value={this.state.check_out} onChange={this.handleValueChange}/><br/>
                         <TextField label="결제여부" input type="text" name="payment_status" value={this.state.payment_status} onChange={this.handleValueChange}/><br/>
                         <TextField label="픽업여부" input type="text" name="pick_up" value={this.state.pick_up} onChange={this.handleValueChange}/><br/>
                         <TextField label="취소여부" input type="text" name="cancel_status" value={this.state.cancel_status} onChange={this.handleValueChange}/><br/>
@@ -138,7 +132,6 @@ class CustomerAdd extends React.Component{
                         <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button> 
                     </DialogActions>
                 </Dialog>
-
             </div>
         )
     }
