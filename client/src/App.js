@@ -1,23 +1,20 @@
 import './App.css';
-import Customer from './components/Customer'
-import CustomerAdd from './components/CustomerAdd';
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Drawer from '@material-ui/core/Drawer';
+import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+import { HashRouter as Router, Route } from 'react-router-dom';
+import Home from './components/Home';
+import Staff from './components/Staff';
+import Reservation from './components/Reservation';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 const styles = theme => ({
   root : {
@@ -98,62 +95,17 @@ class App extends Component{
   constructor(props){
     super(props);
     this.state = {
-      reservations : '',
-      completed : 0,
-      searchKeyword : ''
+      toggle : false
     }
   }
 
-  stateRefresh = () => {
-    this.setState({
-      reservations : '',
-      completed : 0,
-      searchKeyword : ''
-    });
-    this.callApi()
-      .then(res => this.setState({reservations : res}))
-      .catch(err => console.log(err));
-  }
-
-  componentDidMount(){
-    this.timer = setInterval(this.progress, 20);
-    this.callApi()
-      .then(res => this.setState({reservations : res}))
-      .catch(err => console.log(err));
-  }
-
-  callApi = async () => {
-    const response = await fetch('/api/reservations');
-    const body = await response.json();
-    return body;
-  }
-
-  progress = () => {
-    const { completed } = this.state;
-    this.setState({completed : completed >= 100 ? 0 : completed + 1});
-  }
-
-  handleValueChange = (e) => {
-    let nextState = {};
-    nextState[e.target.name] = e.target.value;
-    this.setState(nextState);
-  }
+  handleDrawerToggle = () => this.setState({toggle : !this.state.toggle})
 
   render(){
-    const filteredComponents = (data) => {
-      data = data.filter((c) => {
-        return c.guest_name.indexOf(this.state.searchKeyword) > -1;
-      });
-      return data.map((c) => {
-        return <Customer stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_id={c.guest_id} guest_name={c.guest_name}
-        room_number={c.room_number} number_of_members={c.number_of_members} check_in={c.check_in} check_out={c.check_out} real_check_in={c.real_check_in}
-        real_check_out={c.real_check_out} payment_status={c.payment_status} pick_up={c.pick_up} cancel_status={c.cancel_status}/>
-      });
-    }
     const { classes } = this.props;
-    const cellList = ["예약번호", "고객번호", "고객성명", "객실번호", "숙박인원", "예정 체크인", "예정 체크아웃", "실제 체크인", "실제 체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
     return (
       <div className={classes.root}>
+        <Router>
         <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -161,54 +113,38 @@ class App extends Component{
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            onClick={this.handleDrawerToggle}
           >
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            예약 현황 및 관리
+            호텔 예약관리 시스템
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="예약검색"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              name="searchKeyword"
-              value={this.state.searchKeyword}
-              onChange={this.handleValueChange}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
         </Toolbar>
-        </AppBar>
-        <div className={classes.menu}>
-          <CustomerAdd stateRefresh={this.stateRefresh}/>
+        <Drawer open={this.state.toggle}>
+          <MenuItem onClick={this.handleDrawerToggle}>
+            <Link component={RouterLink} to="/">
+              Home
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleDrawerToggle}>
+            <Link component={RouterLink} to="/staff">
+              Staff
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleDrawerToggle}>
+            <Link component={RouterLink} to="/reservation">
+              Reservation
+            </Link>
+          </MenuItem>
+        </Drawer>
+        <div>
+          <Route exact path="/" component={Home}/>
+          <Route exact path="/staff" component={Staff}/>
+          <Route exact path="/reservation" component={Reservation}/>
         </div>
-        <Paper className={classes.paper}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                {cellList.map(c => {
-                  return <TableCell className={classes.tableHead}>{c}</TableCell>
-                })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              { this.state.reservations ? 
-              filteredComponents(this.state.reservations) :  
-              <TableRow>
-                <TableCell colSpan="12" align="center">
-                  <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
-                </TableCell>
-              </TableRow>
-              }
-            </TableBody>
-          </Table>
-        </Paper>
+        </AppBar>
+        </Router>
       </div>
     );
   }
