@@ -1,5 +1,5 @@
-import Customer from './Customer'
-import CustomerAdd from './CustomerAdd';
+import R_Show from './R_Show'
+import Check_in from './Check_in';
 import React, { Component } from 'react';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -15,6 +15,8 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Card from '@material-ui/core/Card';
+import Check_out from './Check_out';
+
 
 const styles = theme => ({
   root : {
@@ -23,6 +25,7 @@ const styles = theme => ({
     minWidth : 1080
   },
   menu : {
+    width : '8%',
     marginTop : 15,
     marginBottom : 15,
     display : 'flex',
@@ -138,7 +141,7 @@ class Reservation extends Component{
         return c.guest_name.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <Customer stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_id={c.guest_id} guest_name={c.guest_name}
+        return <R_Show stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_id={c.guest_id} guest_name={c.guest_name}
         room_number={c.room_number} number_of_members={c.number_of_members} check_in={c.check_in} check_out={c.check_out} real_check_in={c.real_check_in}
         real_check_out={c.real_check_out} payment_status={c.payment_status} pick_up={c.pick_up} cancel_status={c.cancel_status}/>
       });
@@ -154,7 +157,10 @@ class Reservation extends Component{
                 예약 현황 및 관리
               </Typography>
               <div className={classes.menu}>
-                <CustomerAdd stateRefresh={this.stateRefresh}/>
+                <Check_in stateRefresh={this.stateRefresh}/>
+              </div>
+              <div className={classes.menu}>
+                <Check_out stateRefresh={this.stateRefresh}/>
               </div>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>

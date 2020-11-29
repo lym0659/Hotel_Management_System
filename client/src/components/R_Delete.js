@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-class CustomerDelete extends React.Component{
+class R_Delete extends React.Component{
 
     constructor(props){
         super(props);
@@ -58,4 +58,4 @@ class CustomerDelete extends React.Component{
     }
 }
 
-export default CustomerDelete;
+export default R_Delete;

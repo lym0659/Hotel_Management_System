@@ -1,10 +1,10 @@
 import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import CustomerDelete from './CustomerDelete';
+import R_Delete from './R_Delete';
 
 
-class Customer extends React.Component{
+class R_Show extends React.Component{
     render() {
         return (
             <TableRow>
@@ -20,10 +20,10 @@ class Customer extends React.Component{
                 <TableCell>{this.props.payment_status}</TableCell>
                 <TableCell>{this.props.pick_up}</TableCell>
                 <TableCell>{this.props.cancel_status}</TableCell>
-                <TableCell><CustomerDelete stateRefresh={this.props.stateRefresh} reserve_number={this.props.reserve_number}/></TableCell>
+                <TableCell><R_Delete stateRefresh={this.props.stateRefresh} reserve_number={this.props.reserve_number}/></TableCell>
             </TableRow>
         )
     }
 }
 
-export default Customer;
+export default R_Show;

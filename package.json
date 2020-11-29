@@ -8,9 +8,12 @@
     },
     "dependencies": {
         "body-parser": "^1.18.3",
+        "bootstrap": "^4.5.3",
         "express": "^4.16.4",
         "multer": "^1.4.2",
         "mysql": "^2.18.1",
+        "react-calendar": "^3.2.1",
+        "react-dates": "^21.8.0",
         "react-router-dom": "^5.2.0"
     },
     "devDependencies": {
