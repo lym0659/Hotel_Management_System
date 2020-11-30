@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,6 +15,11 @@ import Staff from './main/Staff';
 import Reservation from './main/Reservation';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
+import Admin from './main/Admin';
+import LoginForm from './main/LoginForm';
+import { signIn } from './Login/auth';
+import AuthRoute from './Login/AuthRoute';
+import LogoutButton from './Login/LogoutButton';
 
 const styles = theme => ({
   root : {
@@ -95,14 +100,26 @@ class App extends Component{
   constructor(props){
     super(props);
     this.state = {
+      user : null,
       toggle : false
     }
   }
 
   handleDrawerToggle = () => this.setState({toggle : !this.state.toggle})
 
+  handleLogin = ({email, password}) => this.setState({ user : signIn({ email, password }) })
+
+
+  handleLogout = () => {
+    this.setState({user : null })
+  }
+
   render(){
     const { classes } = this.props;
+
+    const { user } = this.state;
+    const authenticated = this.state.user != null;
+
     return (
       <div className={classes.root}>
         <Router>
@@ -128,20 +145,26 @@ class App extends Component{
             </Link>
           </MenuItem>
           <MenuItem onClick={this.handleDrawerToggle}>
-            <Link component={RouterLink} to="/staff">
-              직원관리
+            <Link component={RouterLink} to="/admin_page">
+              관리자 페이지
             </Link>
           </MenuItem>
           <MenuItem onClick={this.handleDrawerToggle}>
-            <Link component={RouterLink} to="/reservation">
-              예약현황 및 관리
+            {authenticated ? (
+              <LogoutButton logout={this.handleLogout} />
+            ) : (
+            <Link component={RouterLink} to="/admin_login">
+              관리자 로그인
             </Link>
+            )}
           </MenuItem>
         </Drawer>
         <div>
           <Route exact path="/" component={Home}/>
-          <Route exact path="/staff" component={Staff}/>
-          <Route exact path="/reservation" component={Reservation}/>
+          <AuthRoute exact authenticated={authenticated} path="/admin_page" render={props => <Admin user={this.state.user} {...props} />}/>
+          <Route exact path="/admin_login" render={props => (
+              <LoginForm authenticated={authenticated} login={this.handleLogin} {...props} />
+            )}/>
         </div>
         </AppBar>
         </Router>
