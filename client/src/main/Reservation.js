@@ -16,6 +16,7 @@ import { fade } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Card from '@material-ui/core/Card';
 import Check_out from '../components/Check_out';
+import R_Revise from '../components/R_Revise';
 
 
 const styles = theme => ({
@@ -147,7 +148,7 @@ class Reservation extends Component{
       });
     }
     const { classes } = this.props;
-    const cellList = ["예약번호", "고객번호", "고객성명", "객실번호", "숙박인원", "예정 체크인", "예정 체크아웃", "실제 체크인", "실제 체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
+    const cellList = ["예약번호", "고객 아이디", "고객성명", "객실번호", "숙박인원", "예정 체크인", "예정 체크아웃", "실제 체크인", "실제 체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
     return (
       <Card>
         <div className={classes.root}>
@@ -161,6 +162,9 @@ class Reservation extends Component{
               </div>
               <div className={classes.menu}>
                 <Check_out stateRefresh={this.stateRefresh}/>
+              </div>
+              <div className={classes.menu}>
+                <R_Revise stateRefresh={this.stateRefresh}/>
               </div>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>

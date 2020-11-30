@@ -1,5 +1,5 @@
 import React from 'react';
-import { post } from 'axios';
+import { patch } from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -15,13 +15,14 @@ const styles = theme => ({
     }
 })
 
-class Check_in extends React.Component{
+class R_Revise extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
             reserve_number : '',
-            real_check_in : '',
+            revise_element : '',
+            revise_value : '',
             open : false
         }
     }
@@ -35,7 +36,8 @@ class Check_in extends React.Component{
             })
         this.setState({
             reserve_number : '',
-            real_check_in : '',
+            revise_element : '',
+            revise_value : '',
             open : false
         })
     }
@@ -49,14 +51,30 @@ class Check_in extends React.Component{
     addCustomer = () => {
         const url = '/api/reservations';
         const formData = new FormData();
+        if(this.state.revise_element === "객실번호"){
+            this.state.revise_element = "room_number";
+        }
+        else if(this.state.revise_element === "숙박인원"){
+            this.state.revise_element = "number_of_members";
+        }
+        else if(this.state.revise_element === "결제여부"){
+            this.state.revise_element = "payment_status";
+        }
+        else if(this.state.revise_element === "픽업여부"){
+            this.state.revise_element = "pick_up";
+        }
+        else if(this.state.revise_element === "취소여부"){
+            this.state.revise_element = "cancel_status";
+        }
         formData.append('reserve_number', this.state.reserve_number);
-        formData.append('real_check_in', this.state.real_check_in);
+        formData.append('revise_element', this.state.revise_element);
+        formData.append('revise_value', this.state.revise_value);
         const config = {
             headers : {
                 'content-type' : 'multipart/form-data'
             }
         }
-        return post(url, formData, config);
+        return patch(url, formData, config);
 
     }
 
@@ -69,7 +87,8 @@ class Check_in extends React.Component{
     handleClose = () => {
         this.setState({
             reserve_number : '',
-            real_check_in : '',
+            revise_element : '',
+            revise_value : '',
             open : false
         })
     }
@@ -79,16 +98,17 @@ class Check_in extends React.Component{
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-                    체크인 확인
+                    예약정보 수정
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose}>
-                    <DialogTitle>체크인</DialogTitle>
+                    <DialogTitle>정보 수정</DialogTitle>
                     <DialogContent>
                         <TextField label="예약번호" input type="text" name="reserve_number" value={this.state.reserve_number} onChange={this.handleValueChange}/><br/>
-                        <TextField label="체크인" input type="text" name="real_check_in" value={this.state.real_check_in} onChange={this.handleValueChange}/><br/>
+                        <TextField label="변경할 속성" input type="text" name="revise_element" value={this.state.revise_element} onChange={this.handleValueChange}/><br/>
+                        <TextField label="변경값" input type="text" name="revise_value" value={this.state.revise_value} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>확인</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>수정</Button>
                         <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button> 
                     </DialogActions>
                 </Dialog>
@@ -97,4 +117,4 @@ class Check_in extends React.Component{
     }
 }
 
-export default withStyles(styles)(Check_in);
+export default withStyles(styles)(R_Revise);

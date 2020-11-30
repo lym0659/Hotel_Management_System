@@ -1,7 +1,6 @@
 import Staff_Show from '../components/Staff_Show'
 import StaffAdd from '../components/StaffAdd';
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,13 +10,13 @@ import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Card from '@material-ui/core/Card';
+import Staff_Memo from '../components/Staff_Memo';
+import Staff_Revise from '../components/Staff_Revise';
 
 
 const styles = theme => ({
@@ -27,6 +26,7 @@ const styles = theme => ({
     minWidth : 1080
   },
   menu : {
+    width : '8%',
     marginTop : 15,
     marginBottom : 15,
     display : 'flex',
@@ -151,17 +151,23 @@ class Staff extends Component{
       });
     }
     const { classes } = this.props;
-    const cellList = ["직원 아이디", "직원 이름", "담당부서", "담당구역", "직원 주소", "직원 이메일", "직원 전화번호", "봉금", "계좌번호", "직원 메모", "설정"];
+    const cellList = ["직원 아이디", "직원 이름", "담당부서", "담당구역", "직원 주소", "직원 이메일", "직원 전화번호", "봉급", "계좌번호", "특이사항", "설정"];
     return (
         <Card>
         <div className={classes.root}>
           <AppBar position="static" color="s">
             <Toolbar>
               <Typography className={classes.title} variant="h6" noWrap>
-                직원 관리
+                직원 목록
               </Typography>
               <div className={classes.menu}>
                 <StaffAdd stateRefresh={this.stateRefresh}/>
+              </div>
+              <div className={classes.menu}>
+                <Staff_Memo stateRefresh={this.stateRefresh}/>
+              </div>
+              <div className={classes.menu}>
+                <Staff_Revise stateRefresh={this.stateRefresh}/>
               </div>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>

@@ -60,6 +60,29 @@ app.post('/api/staffs', upload.single(), (req, res) => {
     });
 });
 
+app.put('/api/staffs', upload.single(), (req, res) => {
+  let sql = 'UPDATE Staff SET staff_memo = ? WHERE staff_id = ?';
+  let staff_memo = req.body.staff_memo;
+  let staff_id = req.body.staff_id;
+  let params = [staff_memo, staff_id];
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      res.send(rows);
+    });
+});
+
+app.patch('/api/staffs', upload.single(), (req, res) => {
+  let sql = 'UPDATE Staff SET ' + req.body.revise_element + ' = ? WHERE staff_id = ?';
+  let revise_value = req.body.revise_value;
+  let staff_id = req.body.staff_id;
+  let params = [revise_value, staff_id];
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      res.send(rows);
+    });
+});
+
+
 app.delete('/api/staffs/:staff_id', (req, res) => {
   let sql = 'UPDATE Staff SET staff_isDeleted = 1 WHERE staff_id = ?';
   let params = [req.params.staff_id];
@@ -89,6 +112,17 @@ app.put('/api/reservations', upload.single(), (req, res) => {
       (err, rows, fields) => {
         res.send(rows);
       });
+});
+
+app.patch('/api/reservations', upload.single(), (req, res) => {
+  let sql = 'UPDATE Reservation SET ' + req.body.revise_element + ' = ? WHERE reserve_number = ?';
+  let revise_value = req.body.revise_value;
+  let reserve_number = req.body.reserve_number;
+  let params = [revise_value, reserve_number];
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      res.send(rows);
+    });
 });
 
 app.delete('/api/reservations/:reserve_number', (req, res) => {

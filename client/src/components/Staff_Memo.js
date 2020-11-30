@@ -1,5 +1,5 @@
 import React from 'react';
-import { post } from 'axios';
+import { put } from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -15,13 +15,13 @@ const styles = theme => ({
     }
 })
 
-class Check_in extends React.Component{
+class Staff_Memo extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            reserve_number : '',
-            real_check_in : '',
+            staff_id : '',
+            staff_memo : '',
             open : false
         }
     }
@@ -34,8 +34,8 @@ class Check_in extends React.Component{
                 this.props.stateRefresh();
             })
         this.setState({
-            reserve_number : '',
-            real_check_in : '',
+            staff_id : '',
+            staff_memo : '',
             open : false
         })
     }
@@ -47,16 +47,16 @@ class Check_in extends React.Component{
     }
 
     addCustomer = () => {
-        const url = '/api/reservations';
+        const url = '/api/staffs';
         const formData = new FormData();
-        formData.append('reserve_number', this.state.reserve_number);
-        formData.append('real_check_in', this.state.real_check_in);
+        formData.append('staff_id', this.state.staff_id);
+        formData.append('staff_memo', this.state.staff_memo);
         const config = {
             headers : {
                 'content-type' : 'multipart/form-data'
             }
         }
-        return post(url, formData, config);
+        return put(url, formData, config);
 
     }
 
@@ -68,8 +68,8 @@ class Check_in extends React.Component{
 
     handleClose = () => {
         this.setState({
-            reserve_number : '',
-            real_check_in : '',
+            staff_id : '',
+            staff_memo : '',
             open : false
         })
     }
@@ -79,16 +79,16 @@ class Check_in extends React.Component{
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-                    체크인 확인
+                    특이사항 수정
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose}>
-                    <DialogTitle>체크인</DialogTitle>
+                    <DialogTitle>특이사항 수정</DialogTitle>
                     <DialogContent>
-                        <TextField label="예약번호" input type="text" name="reserve_number" value={this.state.reserve_number} onChange={this.handleValueChange}/><br/>
-                        <TextField label="체크인" input type="text" name="real_check_in" value={this.state.real_check_in} onChange={this.handleValueChange}/><br/>
+                        <TextField label="직원 아이디" input type="text" name="staff_id" value={this.state.staff_id} onChange={this.handleValueChange}/><br/>
+                        <TextField label="특이사항" input type="text" name="staff_memo" value={this.state.staff_memo} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>확인</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>수정</Button>
                         <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button> 
                     </DialogActions>
                 </Dialog>
@@ -97,4 +97,4 @@ class Check_in extends React.Component{
     }
 }
 
-export default withStyles(styles)(Check_in);
+export default withStyles(styles)(Staff_Memo);

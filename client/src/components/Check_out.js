@@ -86,7 +86,7 @@ class Check_out extends React.Component{
                         <TextField label="체크아웃" input type="text" name="real_check_out" value={this.state.real_check_out} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>추가</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>확인</Button>
                         <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button> 
                     </DialogActions>
                 </Dialog>

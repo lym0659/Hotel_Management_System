@@ -124,17 +124,17 @@ class App extends Component{
         <Drawer open={this.state.toggle}>
           <MenuItem onClick={this.handleDrawerToggle}>
             <Link component={RouterLink} to="/">
-              Home
+              홈
             </Link>
           </MenuItem>
           <MenuItem onClick={this.handleDrawerToggle}>
             <Link component={RouterLink} to="/staff">
-              Staff
+              직원관리
             </Link>
           </MenuItem>
           <MenuItem onClick={this.handleDrawerToggle}>
             <Link component={RouterLink} to="/reservation">
-              Reservation
+              예약현황 및 관리
             </Link>
           </MenuItem>
         </Drawer>
