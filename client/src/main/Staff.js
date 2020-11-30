@@ -1,6 +1,7 @@
-import R_Show from './R_Show'
-import Check_in from './Check_in';
+import Staff_Show from '../components/Staff_Show'
+import StaffAdd from '../components/StaffAdd';
 import React, { Component } from 'react';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,12 +11,13 @@ import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import { fade } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Card from '@material-ui/core/Card';
-import Check_out from './Check_out';
 
 
 const styles = theme => ({
@@ -25,17 +27,20 @@ const styles = theme => ({
     minWidth : 1080
   },
   menu : {
-    width : '8%',
     marginTop : 15,
     marginBottom : 15,
     display : 'flex',
     justifyContent : 'center'
   },
+  paper : {
+    marginLeft : 18,
+    marginRight : 18
+  },
   progress : {
     margin : theme.spacing(2)
   },
   tableHead : {
-    fontSize : '0.76rem'
+    fontSize : '1.0rem'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -89,37 +94,37 @@ const styles = theme => ({
 
 });
 
-class Reservation extends Component{
+class Staff extends Component{
 
   constructor(props){
     super(props);
     this.state = {
-      reservations : '',
+      staffs : '',
       completed : 0,
-      searchKeyword : '',
+      searchKeyword : ''
     }
   }
 
   stateRefresh = () => {
     this.setState({
-      reservations : '',
+      staffs : '',
       completed : 0,
       searchKeyword : ''
     });
     this.callApi()
-      .then(res => this.setState({reservations : res}))
+      .then(res => this.setState({staffs : res}))
       .catch(err => console.log(err));
   }
 
   componentDidMount(){
     this.timer = setInterval(this.progress, 20);
     this.callApi()
-      .then(res => this.setState({reservations : res}))
+      .then(res => this.setState({staffs : res}))
       .catch(err => console.log(err));
   }
 
   callApi = async () => {
-    const response = await fetch('/api/reservations');
+    const response = await fetch('/api/staffs');
     const body = await response.json();
     return body;
   }
@@ -138,36 +143,32 @@ class Reservation extends Component{
   render(){
     const filteredComponents = (data) => {
       data = data.filter((c) => {
-        return c.guest_name.indexOf(this.state.searchKeyword) > -1;
+        return c.staff_name.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <R_Show stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_id={c.guest_id} guest_name={c.guest_name}
-        room_number={c.room_number} number_of_members={c.number_of_members} check_in={c.check_in} check_out={c.check_out} real_check_in={c.real_check_in}
-        real_check_out={c.real_check_out} payment_status={c.payment_status} pick_up={c.pick_up} cancel_status={c.cancel_status}/>
+        return <Staff_Show stateRefresh={this.stateRefresh} key={c.staff_id} staff_id={c.staff_id} staff_name={c.staff_name} staff_role={c.staff_role} staff_area={c.staff_area} 
+        staff_address={c.staff_address} staff_mail={c.staff_mail} staff_phone_number={c.staff_phone_number} staff_salary={c.staff_salary} staff_account={c.staff_account} staff_memo={c.staff_memo}/>
       });
     }
     const { classes } = this.props;
-    const cellList = ["예약번호", "고객번호", "고객성명", "객실번호", "숙박인원", "예정 체크인", "예정 체크아웃", "실제 체크인", "실제 체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
+    const cellList = ["직원 아이디", "직원 이름", "담당부서", "담당구역", "직원 주소", "직원 이메일", "직원 전화번호", "봉금", "계좌번호", "직원 메모", "설정"];
     return (
-      <Card>
+        <Card>
         <div className={classes.root}>
           <AppBar position="static" color="s">
             <Toolbar>
               <Typography className={classes.title} variant="h6" noWrap>
-                예약 현황 및 관리
+                직원 관리
               </Typography>
               <div className={classes.menu}>
-                <Check_in stateRefresh={this.stateRefresh}/>
-              </div>
-              <div className={classes.menu}>
-                <Check_out stateRefresh={this.stateRefresh}/>
+                <StaffAdd stateRefresh={this.stateRefresh}/>
               </div>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon/>
                 </div>
                 <InputBase
-                  placeholder="예약검색"
+                  placeholder="직원검색"
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
@@ -190,10 +191,10 @@ class Reservation extends Component{
                 </TableRow>
               </TableHead>
               <TableBody>
-                { this.state.reservations ? 
-                filteredComponents(this.state.reservations) :  
+                { this.state.staffs ? 
+                filteredComponents(this.state.staffs) :  
                 <TableRow>
-                  <TableCell colSpan="12" align="center">
+                  <TableCell colSpan="11" align="center">
                     <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
                   </TableCell>
                 </TableRow>
@@ -207,4 +208,4 @@ class Reservation extends Component{
   }
 }
 
-export default withStyles(styles)(Reservation);
+export default withStyles(styles)(Staff);

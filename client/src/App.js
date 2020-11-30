@@ -10,9 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import { fade } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { HashRouter as Router, Route } from 'react-router-dom';
-import Home from './components/Home';
-import Staff from './components/Staff';
-import Reservation from './components/Reservation';
+import Home from './main/Home';
+import Staff from './main/Staff';
+import Reservation from './main/Reservation';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
