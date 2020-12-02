@@ -23,7 +23,7 @@ import LogoutButton from './Login/LogoutButton';
 
 const styles = theme => ({
   root : {
-    width : '100%',
+    width : '110%',
     flexGrow: 1,
     minWidth : 1080
   },

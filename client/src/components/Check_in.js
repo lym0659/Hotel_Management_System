@@ -21,7 +21,6 @@ class Check_in extends React.Component{
         super(props);
         this.state = {
             reserve_number : '',
-            real_check_in : '',
             open : false
         }
     }
@@ -35,7 +34,6 @@ class Check_in extends React.Component{
             })
         this.setState({
             reserve_number : '',
-            real_check_in : '',
             open : false
         })
     }
@@ -50,7 +48,6 @@ class Check_in extends React.Component{
         const url = '/api/reservations';
         const formData = new FormData();
         formData.append('reserve_number', this.state.reserve_number);
-        formData.append('real_check_in', this.state.real_check_in);
         const config = {
             headers : {
                 'content-type' : 'multipart/form-data'
@@ -69,13 +66,11 @@ class Check_in extends React.Component{
     handleClose = () => {
         this.setState({
             reserve_number : '',
-            real_check_in : '',
             open : false
         })
     }
 
     render(){
-        const { classes } = this.props;
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
@@ -85,7 +80,6 @@ class Check_in extends React.Component{
                     <DialogTitle>체크인</DialogTitle>
                     <DialogContent>
                         <TextField label="예약번호" input type="text" name="reserve_number" value={this.state.reserve_number} onChange={this.handleValueChange}/><br/>
-                        <TextField label="체크인" input type="text" name="real_check_in" value={this.state.real_check_in} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>확인</Button>

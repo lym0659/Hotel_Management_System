@@ -19,6 +19,7 @@ class StaffAdd extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            file : null,
             staff_id : '',
             staff_name : '',
             staff_role :  '',
@@ -29,6 +30,7 @@ class StaffAdd extends React.Component{
             staff_salary : '',
             staff_account : '',
             staff_memo : '',
+            fileName : '',
             open : false
         }
     }
@@ -41,6 +43,7 @@ class StaffAdd extends React.Component{
                 this.props.stateRefresh();
             })
         this.setState({
+            file : null,
             staff_id : '',
             staff_name : '',
             staff_role :  '',
@@ -51,6 +54,7 @@ class StaffAdd extends React.Component{
             staff_salary : '',
             staff_account : '',
             staff_memo : '',
+            fileName : '',
             open : false
         })
     }
@@ -71,6 +75,7 @@ class StaffAdd extends React.Component{
     addCustomer = () => {
         const url = '/api/staffs';
         const formData = new FormData();
+        formData.append('image', this.state.file)
         formData.append('staff_id', this.state.staff_id)
         formData.append('staff_name', this.state.staff_name);
         formData.append('staff_role', this.state.staff_role);
@@ -98,6 +103,7 @@ class StaffAdd extends React.Component{
 
     handleClose = () => {
         this.setState({
+            file : null,
             staff_id : '',
             staff_name : '',
             staff_role :  '',
@@ -108,6 +114,7 @@ class StaffAdd extends React.Component{
             staff_salary : '',
             staff_account : '',
             staff_memo : '',
+            fileName : '',
             open : false
         })
     }
@@ -122,6 +129,13 @@ class StaffAdd extends React.Component{
                 <Dialog open={this.state.open} onClose={this.handleClose}>
                     <DialogTitle>직원 추가</DialogTitle>
                     <DialogContent>
+                        <input className={classes.hidden} accept="image/*" id="raised-button-file" type = "file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange}/><br/>
+                        <label htmlFor="raised-button-file">
+                            <Button variant="contained" color="primary" component="span" name="file">
+                                {this.state.fileName === "" ? "프로필 이미지 선택" : this.state.fileName}
+                            </Button>
+                        </label>
+                        <br/>
                         <TextField label="직원 아이디" input type="text" name="staff_id" value={this.state.staff_id} onChange={this.handleValueChange}/><br/>
                         <TextField label="직원 이름" input type="text" name="staff_name" value={this.state.staff_name} onChange={this.handleValueChange}/><br/>
                         <TextField label="담당부서" input type="text" name="staff_role" value={this.state.staff_role} onChange={this.handleValueChange}/><br/>
@@ -131,7 +145,7 @@ class StaffAdd extends React.Component{
                         <TextField label="직원 전화번호" input type="text" name="staff_phone_number" value={this.state.staff_phone_number} onChange={this.handleValueChange}/><br/>
                         <TextField label="봉급" input type="text" name="staff_salary" value={this.state.staff_salary} onChange={this.handleValueChange}/><br/>
                         <TextField label="계좌번호" input type="text" name="staff_account" value={this.state.staff_account} onChange={this.handleValueChange}/><br/>
-                        <TextField label="직원 메모" input type="text" name="staff_memo" value={this.state.staff_memo} onChange={this.handleValueChange}/><br/>
+                        <TextField label="특이사항" input type="text" name="staff_memo" value={this.state.staff_memo} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>추가</Button>

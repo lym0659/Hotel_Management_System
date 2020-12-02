@@ -26,15 +26,15 @@ function LoginForm({ authenticated, login, location }) {
         value={email}
         onChange={({ target: { value } }) => setEmail(value)}
         type="text"
-        placeholder="id"
+        placeholder="관리자 아이디"
       />
       <input
         value={password}
         onChange={({ target: { value } }) => setPassword(value)}
         type="password"
-        placeholder="password"
+        placeholder="관리자 비밀번호"
       />
-      <button onClick={handleClick}>Login</button>
+      <button onClick={handleClick}>로그인</button>
     </Card>
   );
 }

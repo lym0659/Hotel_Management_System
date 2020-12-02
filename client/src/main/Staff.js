@@ -146,12 +146,12 @@ class Staff extends Component{
         return c.staff_name.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <Staff_Show stateRefresh={this.stateRefresh} key={c.staff_id} staff_id={c.staff_id} staff_name={c.staff_name} staff_role={c.staff_role} staff_area={c.staff_area} 
+        return <Staff_Show stateRefresh={this.stateRefresh} key={c.staff_id} image={c.image} staff_id={c.staff_id} staff_name={c.staff_name} staff_role={c.staff_role} staff_area={c.staff_area} 
         staff_address={c.staff_address} staff_mail={c.staff_mail} staff_phone_number={c.staff_phone_number} staff_salary={c.staff_salary} staff_account={c.staff_account} staff_memo={c.staff_memo}/>
       });
     }
     const { classes } = this.props;
-    const cellList = ["직원 아이디", "직원 이름", "담당부서", "담당구역", "직원 주소", "직원 이메일", "직원 전화번호", "봉급", "계좌번호", "특이사항", "설정"];
+    const cellList = ["직원 이미지", "직원 아이디", "직원 이름", "담당부서", "담당구역", "직원 주소", "직원 이메일", "직원 전화번호", "봉급", "계좌번호", "특이사항", "설정"];
     return (
         <Card>
         <div className={classes.root}>
@@ -200,7 +200,7 @@ class Staff extends Component{
                 { this.state.staffs ? 
                 filteredComponents(this.state.staffs) :  
                 <TableRow>
-                  <TableCell colSpan="11" align="center">
+                  <TableCell colSpan="12" align="center">
                     <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
                   </TableCell>
                 </TableRow>
