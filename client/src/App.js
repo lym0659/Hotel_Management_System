@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Component, useState, useEffect} from 'react';
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,8 +11,6 @@ import { fade } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import Home from './main/Home';
-import Staff from './main/Staff';
-import Reservation from './main/Reservation';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Admin from './main/Admin';
@@ -20,6 +18,10 @@ import LoginForm from './main/LoginForm';
 import { signIn } from './Login/auth';
 import AuthRoute from './Login/AuthRoute';
 import LogoutButton from './Login/LogoutButton';
+import Hotel from './main/Hotel';
+import Facilities from './main/Facilities';
+import Tour from './main/Tour';
+import Restaurants from './main/Restaurants';
 
 const styles = theme => ({
   root : {
@@ -117,7 +119,6 @@ class App extends Component{
   render(){
     const { classes } = this.props;
 
-    const { user } = this.state;
     const authenticated = this.state.user != null;
 
     return (
@@ -145,6 +146,46 @@ class App extends Component{
             </Link>
           </MenuItem>
           <MenuItem onClick={this.handleDrawerToggle}>
+            <Link component={RouterLink} to="/hotel">
+              호텔 소개
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleDrawerToggle}>
+            <Link component={RouterLink} to="/facilites">
+              시설 소개
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleDrawerToggle}>
+            <Link component={RouterLink} to="/tour">
+              주변 시설/관광지
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleDrawerToggle}>
+            <Link component={RouterLink} to="/restaurants">
+              호텔 내 식당
+            </Link>
+          </MenuItem>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <MenuItem onClick={this.handleDrawerToggle}>
             <Link component={RouterLink} to="/admin_page">
               관리자 페이지
             </Link>
@@ -161,6 +202,10 @@ class App extends Component{
         </Drawer>
         <div>
           <Route exact path="/" component={Home}/>
+          <Route exact path="/hotel" component={Hotel}/>
+          <Route exact path="/facilites" component={Facilities}/>
+          <Route exact path="/tour" component={Tour}/>
+          <Route exact path="/restaurants" component={Restaurants}/>
           <AuthRoute exact authenticated={authenticated} path="/admin_page" render={props => <Admin user={this.state.user} {...props} />}/>
           <Route exact path="/admin_login" render={props => (
               <LoginForm authenticated={authenticated} login={this.handleLogin} {...props} />
