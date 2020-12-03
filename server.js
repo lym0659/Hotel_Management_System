@@ -32,6 +32,50 @@ app.get('/api/reservations', (req, res) => {
     )
 });
 
+app.get('/api/rooms', (req, res) => {
+  connection.query(
+    "SELECT * FROM Room",
+    (err, rows, fields) => {
+      res.send(rows);
+    }
+  )
+});
+
+app.put('/api/rooms', upload.single(), (req, res) => {
+  let sql = 'UPDATE Room SET ' + req.body.revise_element + ' = ? WHERE room_number = ?';
+  let revise_value = req.body.revise_value;
+  let room_number = req.body.room_number;
+  let params = [revise_value, room_number];
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      res.send(rows);
+    });
+});
+
+app.get('/api/guests', (req, res) => {
+  connection.query(
+    "SELECT * FROM Guest",
+    (err, rows, fields) => {
+      res.send(rows);
+    }
+  )
+});
+
+app.post('/api/guests', upload.single(), (req, res) => {
+  let sql = 'INSERT INTO Guest VALUES (?, ?, ?, ?, ?, ?)';
+  let guest_id = req.body.guest_id;
+  let guest_name = req.body.guest_name;
+  let payment_info = req.body.payment_info;
+  let guest_mail = req.body.guest_mail;
+  let guest_phone_number = req.body.guest_phone_number;
+  let unpaid = req.body.unpaid;
+  let params = [guest_id, guest_name, payment_info, guest_mail, guest_phone_number, unpaid];
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      res.send(rows);
+    });
+});
+
 app.get('/api/staffs', (req, res) => {
   connection.query(
     "SELECT * FROM Staff WHERE staff_isDeleted = 0",

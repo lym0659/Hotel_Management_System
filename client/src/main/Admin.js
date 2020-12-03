@@ -8,6 +8,8 @@ import Card from '@material-ui/core/Card';
 import { Toolbar } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
+import Guest from './Guest';
+import Room from './Room';
 
 const roots = {
   root : {
@@ -52,7 +54,7 @@ function Admin({ user , props}) {
             관리자 기능
         </Typography>
         <div style={styles2}>
-        <Link to="/staff">
+        <Link to="/guest">
           <Button variant="contained" color="default">고객 관리</Button>
         </Link>
         </div>
@@ -67,7 +69,7 @@ function Admin({ user , props}) {
         </Link>
         </div>
         <div style={styles}>
-        <Link to="/staff">
+        <Link to="/room">
           <Button variant="contained" color="default">객실 관리</Button>
         </Link>
         </div>
@@ -88,7 +90,7 @@ function Admin({ user , props}) {
         </div>
         <div style={styles}>
         <Link to="/staff">
-          <Button variant="contained" color="default">픽업 관리</Button>
+          <Button variant="contained" color="default">관광 관리</Button>
         </Link>
         </div>
         <div style={styles}>
@@ -106,6 +108,8 @@ function Admin({ user , props}) {
     </div>
       <main>
         <Switch>
+        <Route exact path="/room" component={Room} />
+          <Route exact path="/guest" component={Guest} />
           <Route exact path="/staff" component={Staff} />
           <Route exact path="/reservation" component={Reservation} />
         </Switch>
