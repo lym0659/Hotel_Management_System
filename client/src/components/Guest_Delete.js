@@ -27,8 +27,8 @@ class Guest_Delete extends React.Component{
         })
     }
 
-    deleteCustomer(guest_id){
-        const url = '/api/guests/' + guest_id;
+    deleteCustomer(guest_mail){
+        const url = '/api/guests/' + guest_mail;
         fetch(url, {
             method : 'DELETE'
         })
@@ -49,7 +49,7 @@ class Guest_Delete extends React.Component{
                         </Typography>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" color="primary" onClick={(e) => {this.deleteCustomer(this.props.guest_id)}}>삭제</Button>
+                        <Button variant="contained" color="primary" onClick={(e) => {this.deleteCustomer(this.props.guest_mail)}}>삭제</Button>
                         <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>                   
                     </DialogActions>
                 </Dialog>
