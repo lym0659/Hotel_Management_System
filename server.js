@@ -65,19 +65,19 @@ app.post('/api/services', upload.single(), (req, res) => {
   let sql = 'INSERT INTO Service VALUES (?, ?, ?, ?, ?, 0)';
   let service_name = req.body.service_name;
   let staff_id = req.body.staff_id;
-  let guest_id = req.body.guest_id;
+  let guest_mail = req.body.guest_mail;
   let room_number = req.body.room_number;
   let service_price = req.body.service_price;
-  let params = [service_name, staff_id, guest_id, room_number, service_price];
+  let params = [service_name, staff_id, guest_mail, room_number, service_price];
   connection.query(sql, params,
     (err, rows, fields) => {
       res.send(rows);
     });
 });
 
-app.delete('/api/services/:guest_id', (req, res) => {
-  let sql = 'UPDATE Service SET service_isDeleted = 1 WHERE guest_id = ?';
-  let params = [req.params.guest_id];
+app.delete('/api/services/:guest_mail', (req, res) => {
+  let sql = 'UPDATE Service SET service_isDeleted = 1 WHERE guest_mail = ?';
+  let params = [req.params.guest_mail];
   connection.query(sql, params,
     (err,rows,fields) => {
       res.send(rows);

@@ -21,7 +21,7 @@ class ServiceAdd extends React.Component{
         this.state = {
             service_name : '',
             staff_id : '',
-            guest_id :  '',
+            guest_mail :  '',
             room_number : '',
             service_price : '',
             open : false
@@ -38,7 +38,7 @@ class ServiceAdd extends React.Component{
         this.setState({
             service_name : '',
             staff_id : '',
-            guest_id :  '',
+            guest_mail :  '',
             room_number : '',
             service_price : '',
             open : false
@@ -63,7 +63,7 @@ class ServiceAdd extends React.Component{
         const formData = new FormData();
         formData.append('service_name', this.state.service_name)
         formData.append('staff_id', this.state.staff_id);
-        formData.append('guest_id', this.state.guest_id);
+        formData.append('guest_mail', this.state.guest_mail);
         formData.append('room_number', this.state.room_number);
         formData.append('service_price', this.state.service_price);
         const config = {
@@ -85,7 +85,7 @@ class ServiceAdd extends React.Component{
         this.setState({
             service_name : '',
             staff_id : '',
-            guest_id :  '',
+            guest_mail :  '',
             room_number : '',
             service_price : '',
             open : false
@@ -104,7 +104,7 @@ class ServiceAdd extends React.Component{
                     <DialogContent>
                         <TextField label="서비스명" input type="text" name="service_name" value={this.state.service_name} onChange={this.handleValueChange}/><br/>
                         <TextField label="담당직원" input type="text" name="staff_id" value={this.state.staff_id} onChange={this.handleValueChange}/><br/>
-                        <TextField label="요청고객" input type="text" name="guest_id" value={this.state.guest_id} onChange={this.handleValueChange}/><br/>
+                        <TextField label="요청고객" input type="text" name="guest_mail" value={this.state.guest_mail} onChange={this.handleValueChange}/><br/>
                         <TextField label="객실번호" input type="text" name="room_number" value={this.state.room_number} onChange={this.handleValueChange}/><br/>
                         <TextField label="서비스 금액" input type="text" name="service_price" value={this.state.service_price} onChange={this.handleValueChange}/><br/>
                     </DialogContent>

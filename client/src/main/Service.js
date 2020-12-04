@@ -144,7 +144,7 @@ class Service extends Component{
         return c.service_name.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <Service_Show stateRefresh={this.stateRefresh} key={c.guest_id} service_name={c.service_name} staff_id={c.staff_id} guest_id={c.guest_id}
+        return <Service_Show stateRefresh={this.stateRefresh} key={c.guest_id} service_name={c.service_name} staff_id={c.staff_id} guest_mail={c.guest_mail}
         room_number={c.room_number} service_price={c.service_price}/>
       });
     }
