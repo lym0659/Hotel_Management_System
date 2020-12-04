@@ -114,13 +114,10 @@ app.get('/api/guests', (req, res) => {
 });
 
 app.post('/api/guests', upload.single(), (req, res) => {
-  let sql = 'INSERT INTO Guest VALUES (?, ?, ?, ?, ?, 0)';
+  let sql = 'UPDATE Guest SET ' + req.body.revise_element + ' = ? WHERE guest_mail = ?';
+  let revise_value = req.body.revise_value;
   let guest_mail = req.body.guest_mail;
-  let guest_name = req.body.guest_name;
-  let payment_info = req.body.payment_info;
-  let guest_phone_number = req.body.guest_phone_number;
-  let unpaid = req.body.unpaid;
-  let params = [guest_mail, guest_name, payment_info, guest_phone_number, unpaid];
+  let params = [revise_value, guest_mail];
   connection.query(sql, params,
     (err, rows, fields) => {
       res.send(rows);

@@ -8,22 +8,21 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
+
 const styles = theme => ({
     hidden : {
         display : 'none'
     }
 })
 
-class GuestAdd extends React.Component{
+class Guest_Revise extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
             guest_mail : '',
-            guest_name : '',
-            payment_info :  '',
-            guest_phone_number : '',
-            unpaid : '',
+            revise_element : '',
+            revise_value : '',
             open : false
         }
     }
@@ -37,18 +36,9 @@ class GuestAdd extends React.Component{
             })
         this.setState({
             guest_mail : '',
-            guest_name : '',
-            payment_info :  '',
-            guest_phone_number : '',
-            unpaid : '',
+            revise_element : '',
+            revise_value : '',
             open : false
-        })
-    }
-
-    handleFileChange = (e) => {
-        this.setState({
-            file : e.target.files[0],
-            fileName : e.target.value
         })
     }
 
@@ -61,11 +51,21 @@ class GuestAdd extends React.Component{
     addCustomer = () => {
         const url = '/api/guests';
         const formData = new FormData();
+        if(this.state.revise_element === "고객성명"){
+            this.state.revise_element = "guest_name";
+        }
+        else if(this.state.revise_element === "결제정보"){
+            this.state.revise_element = "payment_info";
+        }
+        else if(this.state.revise_element === "고객 전화번호"){
+            this.state.revise_element = "guest_phone_number";
+        }
+        else if(this.state.revise_element === "미결제 금액"){
+            this.state.revise_element = "unpaid";
+        }
         formData.append('guest_mail', this.state.guest_mail);
-        formData.append('guest_name', this.state.guest_name);
-        formData.append('payment_info', this.state.payment_info);
-        formData.append('guest_phone_number', this.state.guest_phone_number);
-        formData.append('unpaid', this.state.unpaid);
+        formData.append('revise_element', this.state.revise_element);
+        formData.append('revise_value', this.state.revise_value);
         const config = {
             headers : {
                 'content-type' : 'multipart/form-data'
@@ -84,10 +84,8 @@ class GuestAdd extends React.Component{
     handleClose = () => {
         this.setState({
             guest_mail : '',
-            guest_name : '',
-            payment_info :  '',
-            guest_phone_number : '',
-            unpaid : '',
+            revise_element : '',
+            revise_value : '',
             open : false
         })
     }
@@ -97,26 +95,23 @@ class GuestAdd extends React.Component{
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-                    고객 추가하기
+                    고객정보 수정
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose}>
-                    <DialogTitle>고객 추가</DialogTitle>
+                    <DialogTitle>정보 수정</DialogTitle>
                     <DialogContent>
-                        <TextField label="고객 이메일" input type="text" name="guest_mail" value={this.state.guest_mail} onChange={this.handleValueChange}/><br/>
-                        <TextField label="고객 성명" input type="text" name="guest_name" value={this.state.guest_name} onChange={this.handleValueChange}/><br/>
-                        <TextField label="결제정보" input type="text" name="payment_info" value={this.state.payment_info} onChange={this.handleValueChange}/><br/>
-                        <TextField label="고객 전화번호" input type="text" name="guest_phone_number" value={this.state.guest_phone_number} onChange={this.handleValueChange}/><br/>
-                        <TextField label="미결제 정보" input type="text" name="unpaid" value={this.state.unpaid} onChange={this.handleValueChange}/><br/>
+                        <TextField label="고객메일" input type="text" name="guest_mail" value={this.state.guest_mail} onChange={this.handleValueChange}/><br/>
+                        <TextField label="변경할 속성" input type="text" name="revise_element" value={this.state.revise_element} onChange={this.handleValueChange}/><br/>
+                        <TextField label="변경값" input type="text" name="revise_value" value={this.state.revise_value} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>추가</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>수정</Button>
                         <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button> 
                     </DialogActions>
                 </Dialog>
-
             </div>
         )
     }
 }
 
-export default withStyles(styles)(GuestAdd);
+export default withStyles(styles)(Guest_Revise);

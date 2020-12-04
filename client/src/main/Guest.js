@@ -14,7 +14,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Card from '@material-ui/core/Card';
-import GuestAdd from '../components/GuestAdd';
+import Guest_Revise from '../components/Guest_Revise';
 
 
 const styles = theme => ({
@@ -159,7 +159,7 @@ class Guest extends Component{
                 고객 목록
               </Typography>
               <div className={classes.menu}>
-                <GuestAdd stateRefresh={this.stateRefresh}/>
+                <Guest_Revise stateRefresh={this.stateRefresh}/>
               </div>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
