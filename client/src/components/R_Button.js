@@ -3,6 +3,7 @@ import { put } from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
 
 const styles = theme => ({
     hidden : {
@@ -19,8 +20,13 @@ const styles = theme => ({
         marginBottom : 15,
         display : 'flex',
         justifyContent : 'center'
-    }
+    },
+    
 })
+
+const styles1 = {
+    minWidth : "135%",
+  }
 
 class R_Button extends React.Component{
 
@@ -115,7 +121,7 @@ class R_Button extends React.Component{
     render(){
         const { classes } = this.props;
         return (
-            <div>
+            <Card align="center">
                 <TextField label="고객 이메일" input type="text" name="guest_mail" value={this.state.guest_mail} onChange={this.handleValueChange}/><br/>
                 <TextField label="고객 성명" input type="text" name="guest_name" value={this.state.guest_name} onChange={this.handleValueChange}/><br/>
                 <TextField label="카드번호" input type="text" name="payment_info" value={this.state.payment_info} onChange={this.handleValueChange}/><br/>
@@ -127,8 +133,8 @@ class R_Button extends React.Component{
                 <TextField label="체크인" input type="text" name="check_in" value={this.state.check_in} onChange={this.handleValueChange}/><br/>
                 <TextField label="체크아웃" input type="text" name="check_out" value={this.state.check_out} onChange={this.handleValueChange}/><br/>
                 <TextField label="픽업 여부" input type="text" name="pick_up" value={this.state.pick_up} onChange={this.handleValueChange}/><br/>
-                <Button variant="contained" color="inherit" onClick={this.handleFormSubmit1}><Button variant="contained" color="primary" onClick={this.handleFormSubmit}>입력완료</Button></Button>
-            </div>
+                <Button variant="contained" color="primary" onClick={this.handleFormSubmit1}><Button style={styles1} variant="contained" color="primary" onClick={this.handleFormSubmit}>입력완료</Button></Button>
+            </Card>
         )
     }
 }

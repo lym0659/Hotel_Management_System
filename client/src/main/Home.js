@@ -6,8 +6,8 @@ import Card from '@material-ui/core/Card';
 import { Toolbar } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
-import Service from './Service';
 import R_Button from '../components/R_Button';
+import Home_Room from '../components/Home_Room';
 
 const roots = {
   root : {
@@ -27,13 +27,13 @@ const styles1 = {
 
 const styles2 = {
   width : '5%',
-  marginLeft : 120,
+  marginLeft : 1100,
   display : 'flex',
   justifyContent : 'center'
 }
 
 const styles = {
-  width : '6.6%',
+  width : '8%',
   //marginBottom : 15,
   display : 'flex',
   justifyContent : 'center'
@@ -64,7 +64,7 @@ class Home extends React.Component{
                 </Link>
                 </div>
                 <div style={styles}>
-                <Link to="/staff">
+                <Link to="/home_room">
                 <Button variant="contained" color="default">객실정보 확인하기</Button>
                 </Link>
                 </div>
@@ -74,7 +74,7 @@ class Home extends React.Component{
             <main>
                 <Switch>
                 <Route exact path="/reserve" component={R_Button} />
-                <Route exact path="/service" component={Service} />
+                <Route exact path="/home_room" component={Home_Room} />
                 </Switch>
             </main>
             </Router>

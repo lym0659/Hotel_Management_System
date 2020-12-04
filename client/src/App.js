@@ -22,6 +22,7 @@ import Hotel from './main/Hotel';
 import Facilities from './main/Facilities';
 import Tour from './main/Tour';
 import Restaurants from './main/Restaurants';
+import Room_Introduce from './main/Room_Introduce';
 
 const styles = theme => ({
   root : {
@@ -156,6 +157,11 @@ class App extends Component{
             </Link>
           </MenuItem>
           <MenuItem onClick={this.handleDrawerToggle}>
+            <Link component={RouterLink} to="/room_introduce">
+              객실 소개
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleDrawerToggle}>
             <Link component={RouterLink} to="/tour">
               주변 시설/관광지
             </Link>
@@ -204,6 +210,7 @@ class App extends Component{
           <Route exact path="/" component={Home}/>
           <Route exact path="/hotel" component={Hotel}/>
           <Route exact path="/facilites" component={Facilities}/>
+          <Route exact path="/room_introduce" component={Room_Introduce}/>
           <Route exact path="/tour" component={Tour}/>
           <Route exact path="/restaurants" component={Restaurants}/>
           <AuthRoute exact authenticated={authenticated} path="/admin_page" render={props => <Admin user={this.state.user} {...props} />}/>
