@@ -15,7 +15,6 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Card from '@material-ui/core/Card';
-import Check_out from '../components/Check_out';
 import R_Revise from '../components/R_Revise';
 
 
@@ -26,7 +25,7 @@ const styles = theme => ({
     minWidth : 1080
   },
   menu : {
-    width : '8%',
+    width : '11%',
     marginTop : 15,
     marginBottom : 15,
     display : 'flex',
@@ -142,13 +141,13 @@ class Reservation extends Component{
         return c.guest_name.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <R_Show stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_id={c.guest_id} guest_name={c.guest_name}
+        return <R_Show stateRefresh={this.stateRefresh} key={c.reserve_number} reserve_number={c.reserve_number} guest_mail={c.guest_mail} guest_name={c.guest_name}
         room_number={c.room_number} number_of_members={c.number_of_members} check_in={c.check_in} check_out={c.check_out} real_check_in={c.real_check_in}
         real_check_out={c.real_check_out} payment_status={c.payment_status} pick_up={c.pick_up} cancel_status={c.cancel_status}/>
       });
     }
     const { classes } = this.props;
-    const cellList = ["예약번호", "고객 아이디", "고객성명", "객실번호", "숙박인원", "예정 체크인", "예정 체크아웃", "실제 체크인", "실제 체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
+    const cellList = ["예약번호", "고객 이메일", "고객성명", "객실번호", "숙박인원", "예정 체크인", "예정 체크아웃", "실제 체크인", "실제 체크아웃", "결제여부", "픽업여부", "취소여부", "설정"];
     return (
       <Card>
         <div className={classes.root}>
@@ -159,9 +158,6 @@ class Reservation extends Component{
               </Typography>
               <div className={classes.menu}>
                 <Check_in stateRefresh={this.stateRefresh}/>
-              </div>
-              <div className={classes.menu}>
-                <Check_out stateRefresh={this.stateRefresh}/>
               </div>
               <div className={classes.menu}>
                 <R_Revise stateRefresh={this.stateRefresh}/>

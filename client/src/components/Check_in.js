@@ -21,6 +21,7 @@ class Check_in extends React.Component{
         super(props);
         this.state = {
             reserve_number : '',
+            check : '',
             open : false
         }
     }
@@ -34,6 +35,7 @@ class Check_in extends React.Component{
             })
         this.setState({
             reserve_number : '',
+            check : '',
             open : false
         })
     }
@@ -47,7 +49,14 @@ class Check_in extends React.Component{
     addCustomer = () => {
         const url = '/api/reservations';
         const formData = new FormData();
+        if(this.state.check === "체크인"){
+            this.state.check = "real_check_in";
+        }
+        else if(this.state.check === "체크아웃"){
+            this.state.check = "real_check_out";
+        }
         formData.append('reserve_number', this.state.reserve_number);
+        formData.append('check', this.state.check);
         const config = {
             headers : {
                 'content-type' : 'multipart/form-data'
@@ -66,6 +75,7 @@ class Check_in extends React.Component{
     handleClose = () => {
         this.setState({
             reserve_number : '',
+            check : '',
             open : false
         })
     }
@@ -74,12 +84,13 @@ class Check_in extends React.Component{
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-                    체크인 확인
+                    체크인/체크아웃 확인
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose}>
-                    <DialogTitle>체크인</DialogTitle>
+                    <DialogTitle>체크인/체크아웃</DialogTitle>
                     <DialogContent>
                         <TextField label="예약번호" input type="text" name="reserve_number" value={this.state.reserve_number} onChange={this.handleValueChange}/><br/>
+                        <TextField label="체크인/체크아웃" input type="text" name="check" value={this.state.check} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>확인</Button>

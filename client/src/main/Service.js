@@ -1,4 +1,4 @@
-import Guest_Show from '../components/Guest_Show'
+import Service_Show from '../components/Service_Show'
 import React, { Component } from 'react';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -14,7 +14,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Card from '@material-ui/core/Card';
-import GuestAdd from '../components/GuestAdd';
+import ServiceAdd from '../components/ServiceAdd';
 
 
 const styles = theme => ({
@@ -92,12 +92,12 @@ const styles = theme => ({
 
 });
 
-class Guest extends Component{
+class Service extends Component{
 
   constructor(props){
     super(props);
     this.state = {
-      guests : '',
+      services : '',
       completed : 0,
       searchKeyword : ''
     }
@@ -105,24 +105,24 @@ class Guest extends Component{
 
   stateRefresh = () => {
     this.setState({
-        guests : '',
+      services : '',
       completed : 0,
       searchKeyword : ''
     });
     this.callApi()
-      .then(res => this.setState({guests : res}))
+      .then(res => this.setState({services : res}))
       .catch(err => console.log(err));
   }
 
   componentDidMount(){
     this.timer = setInterval(this.progress, 20);
     this.callApi()
-      .then(res => this.setState({guests : res}))
+      .then(res => this.setState({services : res}))
       .catch(err => console.log(err));
   }
 
   callApi = async () => {
-    const response = await fetch('/api/guests');
+    const response = await fetch('/api/services');
     const body = await response.json();
     return body;
   }
@@ -141,32 +141,32 @@ class Guest extends Component{
   render(){
     const filteredComponents = (data) => {
       data = data.filter((c) => {
-        return c.guest_name.indexOf(this.state.searchKeyword) > -1;
+        return c.service_name.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <Guest_Show stateRefresh={this.stateRefresh} key={c.guest_id} guest_mail={c.guest_mail} guest_name={c.guest_name} payment_info={c.payment_info}
-         guest_phone_number={c.guest_phone_number} unpaid={c.unpaid}/>
+        return <Service_Show stateRefresh={this.stateRefresh} key={c.guest_id} service_name={c.service_name} staff_id={c.staff_id} guest_id={c.guest_id}
+        room_number={c.room_number} service_price={c.service_price}/>
       });
     }
     const { classes } = this.props;
-    const cellList = ["고객 이메일", "고객 성명", "결제정보", "고객 전화번호", "미결제 금액", "설정"];
+    const cellList = ["서비스명", "담당직원", "요청고객", "객실번호", "서비스 금액", "설정"];
     return (
         <Card>
         <div className={classes.root}>
           <AppBar position="static" color="s">
             <Toolbar>
               <Typography className={classes.title} variant="h6" noWrap>
-                고객 목록
+                서비스 목록
               </Typography>
               <div className={classes.menu}>
-                <GuestAdd stateRefresh={this.stateRefresh}/>
+                <ServiceAdd stateRefresh={this.stateRefresh}/>
               </div>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon/>
                 </div>
                 <InputBase
-                  placeholder="고객검색"
+                  placeholder="서비스 검색"
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
@@ -189,8 +189,8 @@ class Guest extends Component{
                 </TableRow>
               </TableHead>
               <TableBody>
-                { this.state.guests ? 
-                filteredComponents(this.state.guests) :  
+                { this.state.services ? 
+                filteredComponents(this.state.services) :  
                 <TableRow>
                   <TableCell colSpan="12" align="center">
                     <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
@@ -206,4 +206,4 @@ class Guest extends Component{
   }
 }
 
-export default withStyles(styles)(Guest);
+export default withStyles(styles)(Service);

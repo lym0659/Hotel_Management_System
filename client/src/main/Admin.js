@@ -10,6 +10,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Guest from './Guest';
 import Room from './Room';
+import Service from './Service';
+import Facility from './Facility';
 
 const roots = {
   root : {
@@ -74,12 +76,12 @@ function Admin({ user , props}) {
         </Link>
         </div>
         <div style={styles}>
-        <Link to="/staff">
-          <Button variant="contained" color="default">주차 관리</Button>
+        <Link to="/service">
+          <Button variant="contained" color="default">룸 서비스 관리</Button>
         </Link>
         </div>
         <div style={styles}>
-        <Link to="/staff">
+        <Link to="/facility">
           <Button variant="contained" color="default">시설 관리</Button>
         </Link>
         </div>
@@ -90,7 +92,7 @@ function Admin({ user , props}) {
         </div>
         <div style={styles}>
         <Link to="/staff">
-          <Button variant="contained" color="default">관광 관리</Button>
+          <Button variant="contained" color="default">주차 관리</Button>
         </Link>
         </div>
         <div style={styles}>
@@ -108,7 +110,9 @@ function Admin({ user , props}) {
     </div>
       <main>
         <Switch>
-        <Route exact path="/room" component={Room} />
+          <Route exact path="/facility" component={Facility} />
+          <Route exact path="/service" component={Service} />
+          <Route exact path="/room" component={Room} />
           <Route exact path="/guest" component={Guest} />
           <Route exact path="/staff" component={Staff} />
           <Route exact path="/reservation" component={Reservation} />

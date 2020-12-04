@@ -14,16 +14,16 @@ const styles = theme => ({
     }
 })
 
-class GuestAdd extends React.Component{
+class ServiceAdd extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            guest_mail : '',
-            guest_name : '',
-            payment_info :  '',
-            guest_phone_number : '',
-            unpaid : '',
+            service_name : '',
+            staff_id : '',
+            guest_id :  '',
+            room_number : '',
+            service_price : '',
             open : false
         }
     }
@@ -36,11 +36,11 @@ class GuestAdd extends React.Component{
                 this.props.stateRefresh();
             })
         this.setState({
-            guest_mail : '',
-            guest_name : '',
-            payment_info :  '',
-            guest_phone_number : '',
-            unpaid : '',
+            service_name : '',
+            staff_id : '',
+            guest_id :  '',
+            room_number : '',
+            service_price : '',
             open : false
         })
     }
@@ -59,13 +59,13 @@ class GuestAdd extends React.Component{
     }
 
     addCustomer = () => {
-        const url = '/api/guests';
+        const url = '/api/services';
         const formData = new FormData();
-        formData.append('guest_mail', this.state.guest_mail);
-        formData.append('guest_name', this.state.guest_name);
-        formData.append('payment_info', this.state.payment_info);
-        formData.append('guest_phone_number', this.state.guest_phone_number);
-        formData.append('unpaid', this.state.unpaid);
+        formData.append('service_name', this.state.service_name)
+        formData.append('staff_id', this.state.staff_id);
+        formData.append('guest_id', this.state.guest_id);
+        formData.append('room_number', this.state.room_number);
+        formData.append('service_price', this.state.service_price);
         const config = {
             headers : {
                 'content-type' : 'multipart/form-data'
@@ -83,11 +83,11 @@ class GuestAdd extends React.Component{
 
     handleClose = () => {
         this.setState({
-            guest_mail : '',
-            guest_name : '',
-            payment_info :  '',
-            guest_phone_number : '',
-            unpaid : '',
+            service_name : '',
+            staff_id : '',
+            guest_id :  '',
+            room_number : '',
+            service_price : '',
             open : false
         })
     }
@@ -97,16 +97,16 @@ class GuestAdd extends React.Component{
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-                    고객 추가하기
+                    서비스 추가
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose}>
-                    <DialogTitle>고객 추가</DialogTitle>
+                    <DialogTitle>서비스 추가</DialogTitle>
                     <DialogContent>
-                        <TextField label="고객 이메일" input type="text" name="guest_mail" value={this.state.guest_mail} onChange={this.handleValueChange}/><br/>
-                        <TextField label="고객 성명" input type="text" name="guest_name" value={this.state.guest_name} onChange={this.handleValueChange}/><br/>
-                        <TextField label="결제정보" input type="text" name="payment_info" value={this.state.payment_info} onChange={this.handleValueChange}/><br/>
-                        <TextField label="고객 전화번호" input type="text" name="guest_phone_number" value={this.state.guest_phone_number} onChange={this.handleValueChange}/><br/>
-                        <TextField label="미결제 정보" input type="text" name="unpaid" value={this.state.unpaid} onChange={this.handleValueChange}/><br/>
+                        <TextField label="서비스명" input type="text" name="service_name" value={this.state.service_name} onChange={this.handleValueChange}/><br/>
+                        <TextField label="담당직원" input type="text" name="staff_id" value={this.state.staff_id} onChange={this.handleValueChange}/><br/>
+                        <TextField label="요청고객" input type="text" name="guest_id" value={this.state.guest_id} onChange={this.handleValueChange}/><br/>
+                        <TextField label="객실번호" input type="text" name="room_number" value={this.state.room_number} onChange={this.handleValueChange}/><br/>
+                        <TextField label="서비스 금액" input type="text" name="service_price" value={this.state.service_price} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>추가</Button>
@@ -119,4 +119,4 @@ class GuestAdd extends React.Component{
     }
 }
 
-export default withStyles(styles)(GuestAdd);
+export default withStyles(styles)(ServiceAdd);

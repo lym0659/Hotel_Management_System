@@ -1,8 +1,43 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { Link, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import { Toolbar } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Service from './Service';
+import R_Button from '../components/R_Button';
+
+const roots = {
+  root : {
+    width : '100%',
+    flexGrow: 1,
+    minWidth : 1080
+  }
+}
+
+const styles1 = {
+  left : '10px',
+  width : '120%',
+  //marginBottom : 15,
+  display : 'flex',
+  justifyContent : 'center'
+}
+
+const styles2 = {
+  width : '5%',
+  marginLeft : 120,
+  display : 'flex',
+  justifyContent : 'center'
+}
+
+const styles = {
+  width : '6.6%',
+  //marginBottom : 15,
+  display : 'flex',
+  justifyContent : 'center'
+}
 
 class Home extends React.Component{
     constructor(props){
@@ -15,19 +50,35 @@ class Home extends React.Component{
 
     render() {
         return (
-            <div className="App">
-
-                <DateRangePicker
-                    startDate={this.state.startDate}
-                    startDateId="your_unique_start_date_id"
-                    endDate={this.state.endDate}
-                    endDateId="your_unique_end_date_id"
-                    onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })}
-                    focusedInput={this.state.focusedInput}
-                    onFocusChange={focusedInput => this.setState({ focusedInput })}
-                />
-
+        <Card>
+            <Router>
+            <div style={roots}>
+            <AppBar style={styles1} position="static" color="default">
+            <Toolbar >
+                <Typography flexGrow = "1" display = "none" variant="h6" noWrap>
+                    배에힘꽉조 호텔
+                </Typography>
+                <div style={styles2}>
+                <Link to="/reserve">
+                <Button variant="contained" color="default">예약하기</Button>
+                </Link>
+                </div>
+                <div style={styles}>
+                <Link to="/staff">
+                <Button variant="contained" color="default">객실정보 확인하기</Button>
+                </Link>
+                </div>
+            </Toolbar>
+            </AppBar>
             </div>
+            <main>
+                <Switch>
+                <Route exact path="/reserve" component={R_Button} />
+                <Route exact path="/service" component={Service} />
+                </Switch>
+            </main>
+            </Router>
+        </Card>
         )
     }
 }

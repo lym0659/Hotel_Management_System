@@ -9,7 +9,7 @@ class R_Show extends React.Component{
         return (
             <TableRow>
                 <TableCell>{this.props.reserve_number}</TableCell>
-                <TableCell>{this.props.guest_id}</TableCell>
+                <TableCell>{this.props.guest_mail}</TableCell>
                 <TableCell>{this.props.guest_name}</TableCell>
                 <TableCell>{this.props.room_number}</TableCell>
                 <TableCell>{this.props.number_of_members}</TableCell>

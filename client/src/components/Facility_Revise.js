@@ -8,18 +8,21 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
+
 const styles = theme => ({
     hidden : {
         display : 'none'
     }
 })
 
-class Check_out extends React.Component{
+class Facility_Revise extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            reserve_number : '',
+            facility_name : '',
+            revise_element : '',
+            revise_value : '',
             open : false
         }
     }
@@ -32,7 +35,9 @@ class Check_out extends React.Component{
                 this.props.stateRefresh();
             })
         this.setState({
-            reserve_number : '',
+            facility_name : '',
+            revise_element : '',
+            revise_value : '',
             open : false
         })
     }
@@ -44,9 +49,26 @@ class Check_out extends React.Component{
     }
 
     addCustomer = () => {
-        const url = '/api/reservations';
+        const url = '/api/facilitys';
         const formData = new FormData();
-        formData.append('reserve_number', this.state.reserve_number);
+        if(this.state.revise_element === "담당직원"){
+            this.state.revise_element = "staff_id";
+        }
+        else if(this.state.revise_element === "손상여부"){
+            this.state.revise_element = "repair_status";
+        }
+        else if(this.state.revise_element === "이용금액"){
+            this.state.revise_element = "facility_price";
+        }
+        else if(this.state.revise_element === "수용인원"){
+            this.state.revise_element = "facility_capacity";
+        }
+        else if(this.state.revise_element === "운영시간"){
+            this.state.revise_element = "facility_opening_hour";
+        }
+        formData.append('facility_name', this.state.facility_name);
+        formData.append('revise_element', this.state.revise_element);
+        formData.append('revise_value', this.state.revise_value);
         const config = {
             headers : {
                 'content-type' : 'multipart/form-data'
@@ -64,24 +86,29 @@ class Check_out extends React.Component{
 
     handleClose = () => {
         this.setState({
-            reserve_number : '',
+            facility_name : '',
+            revise_element : '',
+            revise_value : '',
             open : false
         })
     }
 
     render(){
+        const { classes } = this.props;
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
-                    체크아웃 확인
+                    시설정보 수정
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose}>
-                    <DialogTitle>체크아웃</DialogTitle>
+                    <DialogTitle>정보 수정</DialogTitle>
                     <DialogContent>
-                        <TextField label="예약번호" input type="text" name="reserve_number" value={this.state.reserve_number} onChange={this.handleValueChange}/><br/>
+                        <TextField label="시설명" input type="text" name="facility_name" value={this.state.facility_name} onChange={this.handleValueChange}/><br/>
+                        <TextField label="변경할 속성" input type="text" name="revise_element" value={this.state.revise_element} onChange={this.handleValueChange}/><br/>
+                        <TextField label="변경값" input type="text" name="revise_value" value={this.state.revise_value} onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>확인</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>수정</Button>
                         <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button> 
                     </DialogActions>
                 </Dialog>
@@ -90,4 +117,4 @@ class Check_out extends React.Component{
     }
 }
 
-export default withStyles(styles)(Check_out);
+export default withStyles(styles)(Facility_Revise);
