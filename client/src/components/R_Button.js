@@ -4,6 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import { DateRangePicker } from 'react-dates';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 
 const styles = theme => ({
     hidden : {
@@ -40,13 +44,17 @@ class R_Button extends React.Component{
             guest_mail_R : '',
             room_number : '',
             number_of_members : '',
-            check_in : '',
-            check_out : '',
+            startDate: null,
+            endDate: null,
             pick_up : '',
         }
     }
 
     handleFormSubmit = (e) => {
+        if(this.state.guest_mail==='' || this.state.guest_name==='' || this.state.payment_info==='' || this.state.guest_phone_number===''){
+            alert("개인정보를 모두 입력해주세요.")
+        }
+        else{
         e.preventDefault()
         this.addCustomer()
             .then((response) => {
@@ -59,6 +67,7 @@ class R_Button extends React.Component{
             payment_info :  '',
             guest_phone_number : '',
         })
+    }
     }
 
     handleValueChange = (e) => {
@@ -85,6 +94,10 @@ class R_Button extends React.Component{
     }
 
     handleFormSubmit1 = (e) => {
+        if(this.state.room_number==='' || this.state.number_of_members==='' || this.state.startDate===null || this.state.endDate===null || this.state.pick_up===''){
+            alert("예약정보를 모두 입력해주세요.");
+        }
+        else{
         e.preventDefault()
         this.addCustomer1()
             .then((response) => {
@@ -94,10 +107,11 @@ class R_Button extends React.Component{
             guest_mail_R : '',
             room_number : '',
             number_of_members : '',
-            check_in : '',
-            check_out : '',
+            startDate: null,
+            endDate: null,
             pick_up : '',
         })
+    }
     }
 
     addCustomer1 = () => {
@@ -106,8 +120,8 @@ class R_Button extends React.Component{
         formData.append('guest_mail_R', this.state.guest_mail_R);
         formData.append('room_number', this.state.room_number);
         formData.append('number_of_members', this.state.number_of_members);
-        formData.append('check_in', this.state.check_in);
-        formData.append('check_out', this.state.check_out);
+        formData.append('startDate', this.state.startDate.format('YYYY-MM-DD'));
+        formData.append('endDate', this.state.endDate.format('YYYY-MM-DD'));
         formData.append('pick_up', this.state.pick_up);
         const config = {
             headers : {
@@ -126,14 +140,20 @@ class R_Button extends React.Component{
                 <TextField label="고객 성명" input type="text" name="guest_name" value={this.state.guest_name} onChange={this.handleValueChange}/><br/>
                 <TextField label="카드번호" input type="text" name="payment_info" value={this.state.payment_info} onChange={this.handleValueChange}/><br/>
                 <TextField label="고객 전화번호" input type="text" name="guest_phone_number" value={this.state.guest_phone_number} onChange={this.handleValueChange}/><br/>
-                
+                <Button  variant="contained" color="primary" onClick={this.handleFormSubmit}>개인 정보 입력</Button><br/><br/>
 
+                <DateRangePicker
+                  startDate={this.state.startDate} 
+                  startDateId="your_unique_start_date_id" 
+                  endDate={this.state.endDate} 
+                  endDateId="your_unique_end_date_id" 
+                  onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} 
+                  focusedInput={this.state.focusedInput} 
+                  onFocusChange={focusedInput => this.setState({ focusedInput })}/><br/>
                 <TextField label="객실번호" input type="text" name="room_number" value={this.state.room_number} onChange={this.handleValueChange}/><br/>
                 <TextField label="숙박인원" input type="text" name="number_of_members" value={this.state.number_of_members} onChange={this.handleValueChange}/><br/>
-                <TextField label="체크인" input type="text" name="check_in" value={this.state.check_in} onChange={this.handleValueChange}/><br/>
-                <TextField label="체크아웃" input type="text" name="check_out" value={this.state.check_out} onChange={this.handleValueChange}/><br/>
                 <TextField label="픽업 여부" input type="text" name="pick_up" value={this.state.pick_up} onChange={this.handleValueChange}/><br/>
-                <Button variant="contained" color="primary" onClick={this.handleFormSubmit1}><Button style={styles1} variant="contained" color="primary" onClick={this.handleFormSubmit}>입력완료</Button></Button>
+                <Button variant="contained" color="primary" onClick={this.handleFormSubmit1}>예약 정보 입력</Button><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             </Card>
         )
     }

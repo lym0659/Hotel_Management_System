@@ -231,14 +231,14 @@ app.patch('/api/reservations', upload.single(), (req, res) => {
 });
 
 app.put('/api/reservations', upload.single(), (req, res) => {
-  let sql = 'INSERT INTO Reservation VALUES ("000051", "?", ?, ?, ?, ?, "0000-00-00", "0000-00-00", "N", ?, "N", 0)';
+  let sql = 'INSERT INTO Reservation VALUES (null, ?, ?, ?, ?, ?, "0000-00-00", "0000-00-00", "N", ?, "N", 0)';
   let guest_mail_R = req.body.guest_mail_R;
   let room_number = req.body.room_number;
   let number_of_members = req.body.number_of_members;
-  let check_in = req.body.check_in;
-  let check_out = req.body.check_out;
+  let startDate = req.body.startDate;
+  let endDate = req.body.endDate;
   let pick_up = req.body.pick_up;
-  let params = [guest_mail_R, room_number, number_of_members, check_in, check_out, pick_up];
+  let params = [guest_mail_R, room_number, number_of_members, startDate, endDate, pick_up];
   connection.query(sql, params,
     (err, rows, fields) => {
       res.send(rows);
